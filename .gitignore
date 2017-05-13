@@ -90,5 +90,8 @@ ENV/
 
 # Sqlite databases
 *.sqlite3
+
+# Development stuff
 .idea/
 .sonar/
+cover/

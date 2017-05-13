@@ -123,8 +123,6 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
     '--with-coverage',
     '--cover-package=arionBackend.api',
-    '--cover-package=arionBackend.urls',
-    '--cover-package=arionBackend.signals',
     '--cover-html'
 ]
 
