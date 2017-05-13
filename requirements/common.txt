@@ -1,0 +1,5 @@
+Django>=1.10.4
+djangorestframework>=3.6.2
+django-cors-headers>=2.0.2
+django-nose>=1.4.4
+psycopg2>=2.7.1

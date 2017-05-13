@@ -1,1 +1,2 @@
-# arion-backend
+# arionBackend
+Backend for the Agora Project
