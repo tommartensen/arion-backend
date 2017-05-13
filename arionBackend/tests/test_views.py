@@ -18,5 +18,5 @@ class ViewsTestCase(TestCase):
 
     def test_get_all_hierarchies(self):
         """The user is not authenticated, thus will not be allowed access."""
-        request = self.c.get('/api/hierarchy', follow=True)
+        request = self.c.get('/api/hierarchy/esper', follow=True)
         self.assertEqual(request.status_code, 200)
