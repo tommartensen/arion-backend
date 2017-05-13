@@ -1,5 +1,4 @@
-# arionBackend
-Backend for the Agora Project
+# Arion Backend
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/tommartensen/arion-backend/master/LICENSE)
 [![GitHub release](https://img.shields.io/badge/release-1.1.0-blue.svg)](https://github.com/tommartensen/arion-backend/releases/latest)
 
