@@ -124,7 +124,6 @@ NOSE_ARGS = [
     '--cover-package=arionBackend.api',
     '--cover-package=arionBackend.transformation.esper',
     '--cover-package=arionBackend.serializers',
-    '--cover-package=arionBackend.models'
 ]
 
 # Internationalization
