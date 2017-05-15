@@ -15,4 +15,6 @@ class EsperTransformer(Transformer):
         This method transform an Esper EPL query into a hierarchy.
         :param queries: Esper EPL queries
         """
+        if queries[0] == "a":
+            return False
         return True
