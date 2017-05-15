@@ -78,7 +78,7 @@ class CreateHierarchy(APIView):
 
         if EsperTransformer().transform(data["queries"]):
             return HttpResponse(status=status.HTTP_201_CREATED)
-        return HttpResponse(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
 
     @staticmethod
     def validate_input(data):

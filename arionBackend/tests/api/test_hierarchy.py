@@ -49,7 +49,6 @@ class HierarchyTestCase(APITestCase):
     def test_get_hierarchy_by_id_not_found(self):
         """
         Tests if the hierarchy cannot be retrieved, if there is no hierarchy with the id.
-        :return: 
         """
         hierarchy = Hierarchy.objects.get(name="TestHierarchy")
         request = self.client.get('/api/hierarchy/esper/' + str(hierarchy.id + 1), follow=True)
@@ -95,5 +94,12 @@ class HierarchyTestCase(APITestCase):
             '/api/hierarchy/esper/create',
             follow=True,
             data={"name": "Test", "queries": [""]},
+            format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        response = self.client.post(
+            '/api/hierarchy/esper/create',
+            follow=True,
+            data={"name": "Test", "queries": ["a"]},
             format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
