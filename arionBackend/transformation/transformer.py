@@ -11,9 +11,10 @@ class Transformer(metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def transform(self, queries):
+    def transform(self, name, queries):
         """
         This abstract method transforms the queries into the hierarchy.
+        :param name: The name of the hierarchy.
         :param queries: The queries to put into a hierarchy.
         :return: boolean on success.
         """
