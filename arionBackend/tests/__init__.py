@@ -2,4 +2,4 @@
 This module contains all the tests.
 """
 
-from . import api, models
+from . import api, serializers
