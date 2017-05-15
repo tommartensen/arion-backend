@@ -31,15 +31,18 @@ class HierarchyTestCase(APITestCase):
         json_response = json.loads(response.content.decode('utf-8'))
         self.assertEqual(json_response[0]["name"], "TestHierarchy")
         self.assertEqual(type(json_response[0]["id"]), int)
-        self.assertEqual(type(json_response[0]["hierarchy"]), dict)
 
     def test_get_hierarchy_by_id_success(self):
         """
         Tests if one hierarchy can be retrieved via id.
         """
         hierarchy = Hierarchy.objects.get(name="TestHierarchy")
-        request = self.client.get('/api/hierarchy/esper/' + str(hierarchy.id), follow=True)
-        self.assertEqual(request.status_code, status.HTTP_200_OK)
+        response = self.client.get('/api/hierarchy/esper/' + str(hierarchy.id), follow=True)
+        json_response = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(json_response["name"], "TestHierarchy")
+        self.assertEqual(type(json_response["id"]), int)
+        self.assertEqual(type(json_response["hierarchy"]), dict)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_hierarchy_by_id_invalid_id(self):
         """

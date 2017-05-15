@@ -25,7 +25,7 @@ class GetAllHierarchies(APIView):
         hierarchies = Hierarchy.objects.all()
         response = []
         for hierarchy in hierarchies:
-            response.append(hierarchy.to_json())
+            response.append(hierarchy.to_basic_json())
         return JsonResponse(data=response, safe=False)
 
 
@@ -76,7 +76,7 @@ class CreateHierarchy(APIView):
         if not self.__class__.validate_input(data):
             return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
 
-        if EsperTransformer().transform(data["queries"]):
+        if EsperTransformer().transform(name=data["name"], queries=data["queries"]):
             return HttpResponse(status=status.HTTP_201_CREATED)
         return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
 
