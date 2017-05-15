@@ -1,5 +1,5 @@
 """
-This module holds the test cases for the different views.
+This module holds the test cases for the hierarchy API module.
 """
 import json
 
