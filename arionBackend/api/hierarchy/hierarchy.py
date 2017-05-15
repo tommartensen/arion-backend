@@ -2,12 +2,21 @@ from django.http import JsonResponse, HttpResponse
 from rest_framework import status
 from rest_framework.views import APIView
 
-from arionBackend.transformation.esper.esper_transformator import EsperTransformer
+from arionBackend.transformation.esper.esper_transformer import EsperTransformer
 
 
 class GetAllHierarchies(APIView):
+    """
+    This class holds the methods to get all hierarchies.
+    """
 
     def get(self, request, format=None):
+        """
+        This works as the API endpoint to return all hierarchies.
+        :param request: The request object that the client sent.
+        :param format: The data format that was requested.
+        :return: JSonResponse with the hierarchies.
+        """
         return JsonResponse(
             [{"id": 1, "name": "Hierarchy", "queries": ["Select * From Test", "Select * from Test2"]},
             {"id": 2, "name": "Horst", "queries": ["Select * From Test3", "Select * from Test4"]}],
@@ -15,10 +24,42 @@ class GetAllHierarchies(APIView):
         )
 
 
+class GetHierarchyById(APIView):
+
+    def get(self, request, hierarchy_id, format=None):
+        """
+        This works as the API endpoint to return a defined hierarchy.
+        :param request: The request object that the client sent.
+        :param hierarchy_id: The requested hierarchy defined by the id.
+        :param format: The data format that was requested.
+        :return: JsonResponse with the hierarchies.
+        """
+        if not self.__class__.validate_input(hierarchy_id):
+            return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
+        return JsonResponse({"name": "Hierarchy", "queries": ["Select * From Test", "Select * from Test2"]})
+
+    @staticmethod
+    def validate_input(hierarchy_id):
+        """
+        Static method to validate the input.
+        :param hierarchy_id: the input by the client.
+        :return: true, if valid; else if invalid.
+        """
+        return int(hierarchy_id)
+
+
 class CreateHierarchy(APIView):
-    """This class may greet the user."""
+    """
+    This class holds the methods to create a new hierarchy.
+    """
 
     def post(self, request, format=None):
+        """
+        This works as the API endpoint to create a new hierarchy.
+        :param request: The request object that the client sent.
+        :param format: The data format that was requested.
+        :return: HttpResponse with a status code, depending on the success.
+        """
         data = request.data
         if not self.__class__.validate_input(data):
             return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
@@ -29,6 +70,11 @@ class CreateHierarchy(APIView):
 
     @staticmethod
     def validate_input(data):
+        """
+        Static method to validate the input.
+        :param data: the input by the client.
+        :return: true, if valid; else if invalid.
+        """
         try:
             if not (data["name"] and len(data["queries"]) and type(data["queries"]) is list):
                 return False
@@ -40,15 +86,3 @@ class CreateHierarchy(APIView):
             if not query:
                 are_valid_queries = False
         return are_valid_queries
-
-
-class GetHierarchyById(APIView):
-
-    def get(self, request, hierarchy_id, format=None):
-        if not self.__class__.validate_input(hierarchy_id):
-            return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
-        return JsonResponse({"name": "Hierarchy", "queries": ["Select * From Test", "Select * from Test2"]})
-
-    @staticmethod
-    def validate_input(hierarchy_id):
-        return int(hierarchy_id)
