@@ -111,9 +111,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Using the REST framework to the APIs
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication'
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
     )
 }
 
@@ -123,8 +122,6 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
     '--with-coverage',
     '--cover-package=arionBackend.api',
-    '--cover-package=arionBackend.urls',
-    '--cover-package=arionBackend.signals',
     '--cover-html'
 ]
 

@@ -96,3 +96,4 @@ ENV/
 .sonar/
 cover/
 migrations/
+Dockerfile
