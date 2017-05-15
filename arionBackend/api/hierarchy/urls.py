@@ -1,5 +1,5 @@
 """
-This module holds the url patterns for the project.
+This module holds the url patterns for the hierarchy API.
 """
 
 from django.conf.urls import url
