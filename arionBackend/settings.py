@@ -121,7 +121,9 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 # Always add new packages to monitor
 NOSE_ARGS = [
     '--with-coverage',
-    '--cover-package=arionBackend',
+    '--cover-package=arionBackend.api',
+    '--cover-package=arionBackend.transformation.esper',
+    '--cover-package=arionBackend.serializers'
 ]
 
 # Internationalization
