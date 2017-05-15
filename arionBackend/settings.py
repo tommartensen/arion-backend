@@ -123,7 +123,7 @@ NOSE_ARGS = [
     '--with-coverage',
     '--cover-package=arionBackend.api',
     '--cover-package=arionBackend.transformation.esper',
-    '--cover-package=arionBackend.serializers'
+    '--cover-package=arionBackend.serializers',
     '--cover-package=arionBackend.models'
 ]
 
