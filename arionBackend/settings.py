@@ -122,7 +122,8 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
     '--with-coverage',
     '--cover-package=arionBackend.api',
-    '--cover-html'
+    '--cover-package=arionBackend.transformation.esper',
+    '--cover-package=arionBackend.serializers',
 ]
 
 # Internationalization

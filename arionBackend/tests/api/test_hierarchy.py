@@ -1,5 +1,5 @@
 """
-This module holds the test cases for the different views.
+This module holds the test cases for the hierarchy API module.
 """
 import json
 
@@ -30,6 +30,8 @@ class HierarchyTestCase(APITestCase):
 
         json_response = json.loads(response.content.decode('utf-8'))
         self.assertEqual(json_response[0]["name"], "TestHierarchy")
+        self.assertEqual(type(json_response[0]["id"]), int)
+        self.assertEqual(type(json_response[0]["hierarchy"]), dict)
 
     def test_get_hierarchy_by_id_success(self):
         """
