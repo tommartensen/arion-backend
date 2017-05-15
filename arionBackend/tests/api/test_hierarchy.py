@@ -1,9 +1,12 @@
 """
 This module holds the test cases for the different views.
 """
+import json
 
 from rest_framework import status
 from rest_framework.test import APITestCase
+
+from arionBackend.models.hierarchy import Hierarchy
 
 
 class HierarchyTestCase(APITestCase):
@@ -16,20 +19,24 @@ class HierarchyTestCase(APITestCase):
         """
         This method sets up the test class with the required data.
         """
-        pass
+        Hierarchy(name="TestHierarchy", json_representation="{}").save()
 
     def test_get_all_hierarchies(self):
         """
         Tests if all hierarchies can be retrieved.
         """
-        request = self.client.get('/api/hierarchy/esper', follow=True)
-        self.assertEqual(request.status_code, status.HTTP_200_OK)
+        response = self.client.get('/api/hierarchy/esper', follow=True)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        json_response = json.loads(response.content)
+        self.assertEqual(json_response[0]["name"], "TestHierarchy")
 
     def test_get_hierarchy_by_id_success(self):
         """
         Tests if one hierarchy can be retrieved via id.
         """
-        request = self.client.get('/api/hierarchy/esper/1', follow=True)
+        hierarchy = Hierarchy.objects.get(name="TestHierarchy")
+        request = self.client.get('/api/hierarchy/esper/' + str(hierarchy.id), follow=True)
         self.assertEqual(request.status_code, status.HTTP_200_OK)
 
     def test_get_hierarchy_by_id_invalid_id(self):
@@ -38,6 +45,15 @@ class HierarchyTestCase(APITestCase):
         """
         request = self.client.get('/api/hierarchy/esper/0', follow=True)
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_hierarchy_by_id_not_found(self):
+        """
+        Tests if the hierarchy cannot be retrieved, if there is no hierarchy with the id.
+        :return: 
+        """
+        hierarchy = Hierarchy.objects.get(name="TestHierarchy")
+        request = self.client.get('/api/hierarchy/esper/' + str(hierarchy.id + 1), follow=True)
+        self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_create_hierarchy_success(self):
         """
@@ -49,3 +65,35 @@ class HierarchyTestCase(APITestCase):
             data={"name": "Test", "queries": ["S"]},
             format="json")
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
+
+    def test_create_hierarchy_bad_request(self):
+        """
+        Tests if a hierarchy cannot be created, if one of the parameters is missing.
+        """
+        response = self.client.post(
+            '/api/hierarchy/esper/create',
+            follow=True,
+            data={"queries": ["S"]},
+            format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        response = self.client.post(
+            '/api/hierarchy/esper/create',
+            follow=True,
+            data={"name": "Test"},
+            format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        response = self.client.post(
+            '/api/hierarchy/esper/create',
+            follow=True,
+            data={"name": "Test", "queries": []},
+            format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        response = self.client.post(
+            '/api/hierarchy/esper/create',
+            follow=True,
+            data={"name": "Test", "queries": [""]},
+            format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
