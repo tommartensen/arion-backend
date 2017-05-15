@@ -1,3 +1,7 @@
+"""
+This module contains the class to represent the real-world event query.
+"""
+
 from django.db import models
 
 from arionBackend.models.hierarchy import Hierarchy

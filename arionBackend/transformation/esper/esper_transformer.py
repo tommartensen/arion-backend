@@ -1,3 +1,7 @@
+"""
+This module holds the class for the EsperTransformer.
+"""
+
 from arionBackend.transformation.transformer import Transformer
 
 

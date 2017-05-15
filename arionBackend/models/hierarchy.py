@@ -1,3 +1,7 @@
+"""
+This module contains the class to represent a real-world hierarchy.
+"""
+
 from django.db import models
 
 

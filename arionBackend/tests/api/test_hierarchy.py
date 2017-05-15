@@ -34,7 +34,7 @@ class HierarchyTestCase(APITestCase):
 
     def test_get_hierarchy_by_id_invalid_id(self):
         """
-        Tests if the hierarchy cannot be retrieved, if the id is invalid. 
+        Tests if the hierarchy cannot be retrieved, if the id is invalid.
         """
         request = self.client.get('/api/hierarchy/esper/0', follow=True)
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)

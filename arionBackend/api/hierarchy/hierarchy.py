@@ -1,5 +1,5 @@
 """
-This module contains all classes for the hierarchy API. 
+This module contains all classes for the hierarchy API.
 """
 
 from django.http import JsonResponse, HttpResponse
