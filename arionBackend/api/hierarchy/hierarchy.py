@@ -1,3 +1,7 @@
+"""
+This module contains all classes for the hierarchy API. 
+"""
+
 from django.http import JsonResponse, HttpResponse
 from rest_framework import status
 from rest_framework.views import APIView
@@ -25,6 +29,9 @@ class GetAllHierarchies(APIView):
 
 
 class GetHierarchyById(APIView):
+    """
+    This class holds the methods to get one hierarchy by id.
+    """
 
     def get(self, request, hierarchy_id, format=None):
         """

@@ -1,4 +1,4 @@
-from arionBackend.transformation.transformator import Transformer
+from arionBackend.transformation.transformer import Transformer
 
 
 class EsperTransformer(Transformer):
