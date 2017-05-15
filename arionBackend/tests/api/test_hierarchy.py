@@ -28,7 +28,7 @@ class HierarchyTestCase(APITestCase):
         response = self.client.get('/api/hierarchy/esper', follow=True)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        json_response = json.loads(response.content, encoding='utf-8')
+        json_response = json.loads(response.content.decode('utf-8'))
         self.assertEqual(json_response[0]["name"], "TestHierarchy")
 
     def test_get_hierarchy_by_id_success(self):
