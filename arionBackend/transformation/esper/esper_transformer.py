@@ -10,6 +10,5 @@ class EsperTransformer(Transformer):
         """
         This method transform an Esper EPL query into a hierarchy.
         :param queries: Esper EPL queries
-        :return: 
         """
         return True

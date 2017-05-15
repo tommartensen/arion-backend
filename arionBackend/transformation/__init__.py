@@ -1,3 +1,3 @@
 """
-This module contains all transformers of type "event language" -> "hierarchy". 
+This module contains all transformers of type "event language" -> "hierarchy".
 """
