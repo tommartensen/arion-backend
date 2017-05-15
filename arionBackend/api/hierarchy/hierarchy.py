@@ -1,11 +1,12 @@
 """
 This module contains all classes for the hierarchy API.
 """
-
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse, HttpResponse
 from rest_framework import status
 from rest_framework.views import APIView
 
+from arionBackend.models.hierarchy import Hierarchy
 from arionBackend.transformation.esper.esper_transformer import EsperTransformer
 
 
@@ -21,11 +22,11 @@ class GetAllHierarchies(APIView):
         :param format: The data format that was requested.
         :return: JSonResponse with the hierarchies.
         """
-        return JsonResponse(
-            [{"id": 1, "name": "Hierarchy", "queries": ["Select * From Test", "Select * from Test2"]},
-            {"id": 2, "name": "Horst", "queries": ["Select * From Test3", "Select * from Test4"]}],
-            safe=False
-        )
+        hierarchies = Hierarchy.objects.all()
+        response = []
+        for hierarchy in hierarchies:
+            response.append(hierarchy.to_json())
+        return JsonResponse(data=response, safe=False)
 
 
 class GetHierarchyById(APIView):
@@ -43,7 +44,11 @@ class GetHierarchyById(APIView):
         """
         if not self.__class__.validate_input(hierarchy_id):
             return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
-        return JsonResponse({"name": "Hierarchy", "queries": ["Select * From Test", "Select * from Test2"]})
+        try:
+            hierarchy = Hierarchy.objects.get(id=hierarchy_id)
+        except ObjectDoesNotExist:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse(hierarchy.to_json())
 
     @staticmethod
     def validate_input(hierarchy_id):
