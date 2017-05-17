@@ -1,6 +1,7 @@
 """
 This module holds the test cases for the json serializer.
 """
+from django.utils import timezone
 from django.test import TestCase
 
 from arionBackend.models.hierarchy import Hierarchy
@@ -23,12 +24,17 @@ class JsonTestCase(TestCase):
         """
         Tests if the hierarchy can be serialized into a json object with few information.
         """
-        hierarchy = Hierarchy.objects.get(name="TestHierarchy")
-        self.assertEqual(serialize_hierarchy_overview(hierarchy), {'id': 1, 'name': 'TestHierarchy'})
+        hierarchy = serialize_hierarchy_overview(Hierarchy.objects.get(name="TestHierarchy"))
+        self.assertEqual(hierarchy["id"], 1)
+        self.assertEqual(hierarchy["name"], "TestHierarchy")
+        self.assertLessEqual(hierarchy["timestamp"], timezone.now())
 
     def test_get_json(self):
         """
         Tests if the hierarchy can be serialized into a json object with all information.
         """
-        hierarchy = Hierarchy.objects.get(name="TestHierarchy")
-        self.assertEqual(serialize_hierarchy_complete(hierarchy), {'id': 1, 'name': 'TestHierarchy', 'hierarchy': {}})
+        hierarchy = serialize_hierarchy_complete(Hierarchy.objects.get(name="TestHierarchy"))
+        self.assertEqual(hierarchy["id"], 1)
+        self.assertEqual(hierarchy["name"], "TestHierarchy")
+        self.assertLessEqual(hierarchy["timestamp"], timezone.now())
+        self.assertEqual(hierarchy["hierarchy"], {})

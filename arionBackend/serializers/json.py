@@ -13,6 +13,7 @@ def serialize_hierarchy_overview(hierarchy):
     return {
         "id": hierarchy.id,
         "name": hierarchy.name,
+        "timestamp": hierarchy.timestamp
     }
 
 
@@ -25,5 +26,6 @@ def serialize_hierarchy_complete(hierarchy):
     return {
         "id": hierarchy.id,
         "name": hierarchy.name,
+        "timestamp": hierarchy.timestamp,
         "hierarchy": json.loads(hierarchy.json_representation)
     }
