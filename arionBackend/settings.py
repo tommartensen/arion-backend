@@ -26,10 +26,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '1-nj8cshl)+l0n0r21*6*=npnxjun+9yun5khho6jiwspj%psc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Allow other hosts to access here
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -148,7 +148,8 @@ STATIC_URL = '/static/'
 
 # The hosts that are allowed to perform CORS queries.
 CORS_ORIGIN_WHITELIST = [
-    "localhost:3000"
+    "localhost:3000",
+    "localhost:5000"
 ]
 
 # Importing local settings
