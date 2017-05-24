@@ -38,6 +38,11 @@ class EsperTransformer(Transformer):
 
 	@staticmethod
 	def parse_query_to_eqmn(query):
+		"""
+		This method parses a query into a eqmn model.
+		:param query: the query to parse
+		:return: eqmn model in json representation or false if error
+		"""
 		try:
 			tokenized_query = parse("insert into {output[name]} select {output[select]} from {input}", query).named
 			tokenized_query = EsperTransformer.parse_optional_condition(tokenized_query)
@@ -48,6 +53,11 @@ class EsperTransformer(Transformer):
 
 	@staticmethod
 	def parse_optional_condition(tokenized_query):
+		"""
+		Looks for a "where" clause in the input clause.
+		:param tokenized_query: the pre-parsed query
+		:return: updated parsed query
+		"""
 		updated_tokenized_query = tokenized_query
 		condition = regex_compile("(WHERE|Where|where)").split(tokenized_query["input"])
 		updated_tokenized_query["input"] = condition[0]
@@ -57,6 +67,11 @@ class EsperTransformer(Transformer):
 
 	@staticmethod
 	def parse_input_clause(input_clause):
+		"""
+		Parses the input clause: Single Event Types, Joins and Patterns are possible.
+		:param input_clause: the input clause to parse
+		:return: the updated input clause
+		"""
 		updated_input_clause = {}
 		if "," in input_clause:
 			# if a comma is in the input clause, multiple event streams are joined as input
@@ -73,4 +88,9 @@ class EsperTransformer(Transformer):
 
 	@staticmethod
 	def parse_pattern(pattern):
+		"""
+		Parses the pattern from the input clause.
+		:param pattern: the pattern to parse
+		:return: eqmn representation of the pattern
+		"""
 		return pattern
