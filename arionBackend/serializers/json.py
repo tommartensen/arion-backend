@@ -27,5 +27,18 @@ def serialize_hierarchy_complete(hierarchy):
 		"id": hierarchy.id,
 		"name": hierarchy.name,
 		"timestamp": hierarchy.timestamp,
-		"hierarchy": json_loads(hierarchy.json_representation)
+		"hierarchy": json_loads(hierarchy.json_representation),
+	}
+
+
+def serialize_query(query):
+	"""
+	Serializes a query into JSON format.
+	:param query: the query to serialize
+	:return: Dictionary with query information
+	"""
+	return {
+		"id": query.id,
+		"query": query.query_string,
+		"eqmn_representation": query.eqmn_representation
 	}
