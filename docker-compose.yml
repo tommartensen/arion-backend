@@ -1,21 +1,21 @@
 version: '2'
 services:
-    proxy:
-        image: "nginx:1-alpine"
-        volumes:
-            - ./utils/nginx.conf:/etc/nginx/nginx.conf:ro
-        ports:
-            - "8080:80"
-        links:
-            - frontend
-            - backend
+	proxy:
+		image: "nginx:1-alpine"
+		volumes:
+			- ./utils/nginx.conf:/etc/nginx/nginx.conf:ro
+		ports:
+			- "8080:80"
+		links:
+			- frontend
+			- backend
 
-    frontend:
-        image: "tommartensen/arion-frontend:latest"
-        env_file:
-            - utils/host.env
+	frontend:
+		image: "tommartensen/arion-frontend:latest"
+		env_file:
+			- utils/host.env
 
-    backend:
-        image: "tommartensen/arion-backend:latest"
-        env_file:
-            - utils/host.env
+	backend:
+		image: "tommartensen/arion-backend:latest"
+		env_file:
+			- utils/host.env

@@ -95,5 +95,9 @@ ENV/
 .idea/
 .sonar/
 cover/
+docu/
 migrations/
 Dockerfile
+README.md
+sonar-project.properties
+LICENSE

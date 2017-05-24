@@ -8,15 +8,15 @@ python:
 
 cache:
   directories:
-    - $HOME/.cache/pip
-    - /home/travis/.sonar/cache
+	- $HOME/.cache/pip
+	- /home/travis/.sonar/cache
 
 addons:
   sonarqube:
-    branches:
-      - .*
-    token: $SONAR_AUTH_TOKEN
-    github_token: $GITHUB_ACCESS_TOKEN
+	branches:
+	  - .*
+	token: $SONAR_AUTH_TOKEN
+	github_token: $GITHUB_ACCESS_TOKEN
 
 install: "pip install -r requirements/dev.txt"
 
