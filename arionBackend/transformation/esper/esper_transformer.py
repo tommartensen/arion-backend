@@ -7,6 +7,7 @@ from arionBackend.transformation.transformer import Transformer
 from parse import *
 from re import compile as regex_compile
 
+
 class EsperTransformer(Transformer):
 	"""
 	This class extends the abstract base class Transformer and implements a transformer for Esper EPL.
@@ -36,6 +37,16 @@ class EsperTransformer(Transformer):
 		return True
 
 	@staticmethod
+	def parse_query_to_eqmn(query):
+		try:
+			tokenized_query = parse("insert into {output[name]} select {output[select]} from {input}", query).named
+			tokenized_query = EsperTransformer.parse_optional_condition(tokenized_query)
+			tokenized_query["input"] = EsperTransformer.parse_input_clause(tokenized_query["input"])
+			return tokenized_query
+		except AttributeError:
+			return False
+
+	@staticmethod
 	def parse_optional_condition(tokenized_query):
 		updated_tokenized_query = tokenized_query
 		condition = regex_compile("(WHERE|Where|where)").split(tokenized_query["input"])
@@ -44,12 +55,22 @@ class EsperTransformer(Transformer):
 			updated_tokenized_query["condition"] = condition[2]
 		return updated_tokenized_query
 
+	@staticmethod
+	def parse_input_clause(input_clause):
+		updated_input_clause = {}
+		if "," in input_clause:
+			# if a comma is in the input clause, multiple event streams are joined as input
+			updated_input_clause["join"] = input_clause.split(",")
+		else:
+			try:
+				tokenized_pattern = parse("pattern {pattern}", input_clause).named
+				updated_input_clause["pattern"] = EsperTransformer.parse_pattern(tokenized_pattern["pattern"])
+			# if no error is thrown, the pattern clause was detected
+			except AttributeError:
+				# input must be single event type
+				updated_input_clause["single"] = input_clause
+		return updated_input_clause
 
 	@staticmethod
-	def parse_query_to_eqmn(query):
-		try:
-			tokenized_query = parse("insert into {output[name]} select {output[select]} from {input}", query).named
-			EsperTransformer.parse_optional_condition(tokenized_query)
-			return tokenized_query
-		except AttributeError:
-			return False
+	def parse_pattern(pattern):
+		return pattern
