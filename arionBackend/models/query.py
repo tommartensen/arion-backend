@@ -13,4 +13,3 @@ class Query(models.Model):
 	"""
 	hierarchy = models.ForeignKey(Hierarchy, on_delete=models.CASCADE)
 	query_string = models.TextField()
-	eqmn_representation = models.TextField()
