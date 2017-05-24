@@ -66,7 +66,7 @@ class HierarchyTestCase(APITestCase):
 		request = self.client.post(
 			'/api/hierarchy/esper/create',
 			follow=True,
-			data={"name": "Test", "queries": ["S"]},
+			data={"name": "Test", "queries": ["INSERT INTO asd SELECT asd FROM asd", "INSERT INTO asd SELECT asd FROM asd WHERE 1=1"]},
 			format="json")
 		self.assertEqual(request.status_code, status.HTTP_201_CREATED)
 
@@ -77,7 +77,7 @@ class HierarchyTestCase(APITestCase):
 		response = self.client.post(
 			'/api/hierarchy/esper/create',
 			follow=True,
-			data={"queries": ["S"]},
+			data={"queries": ["SELECT * FROM asd"]},
 			format="json")
 		self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -99,12 +99,5 @@ class HierarchyTestCase(APITestCase):
 			'/api/hierarchy/esper/create',
 			follow=True,
 			data={"name": "Test", "queries": [""]},
-			format="json")
-		self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-		response = self.client.post(
-			'/api/hierarchy/esper/create',
-			follow=True,
-			data={"name": "Test", "queries": ["a"]},
 			format="json")
 		self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

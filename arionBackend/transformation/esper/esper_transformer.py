@@ -40,7 +40,7 @@ class EsperTransformer(Transformer):
 		updated_tokenized_query = tokenized_query
 		condition = regex_compile("(WHERE|Where|where)").split(tokenized_query["input"])
 		updated_tokenized_query["input"] = condition[0]
-		if len(updated_tokenized_query) > 1:
+		if len(condition) > 1:
 			updated_tokenized_query["condition"] = condition[2]
 		print(updated_tokenized_query)
 		return updated_tokenized_query
