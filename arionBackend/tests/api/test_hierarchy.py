@@ -66,7 +66,12 @@ class HierarchyTestCase(APITestCase):
 		request = self.client.post(
 			'/api/hierarchy/esper/create',
 			follow=True,
-			data={"name": "Test", "queries": ["INSERT INTO asd SELECT asd FROM asd", "INSERT INTO asd SELECT asd FROM asd WHERE 1=1"]},
+			data={"name": "Test", "queries":
+				[
+					"INSERT INTO asd SELECT asdf FROM asdf",
+					"INSERT INTO asd SELECT asdf FROM asdf, asdfg WHERE 1=1",
+					"INSERT INTO asd SELECT asdf FROM PATTERN [[2] asdf]"
+				]},
 			format="json")
 		self.assertEqual(request.status_code, status.HTTP_201_CREATED)
 
