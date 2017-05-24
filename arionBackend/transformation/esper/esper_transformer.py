@@ -60,9 +60,9 @@ class EsperTransformer(Transformer):
 		"""
 		updated_tokenized_query = tokenized_query
 		condition = regex_compile("(WHERE|Where|where)").split(tokenized_query["input"])
-		updated_tokenized_query["input"] = condition[0]
+		updated_tokenized_query["input"] = condition[0].strip()
 		if len(condition) > 1:
-			updated_tokenized_query["condition"] = condition[2]
+			updated_tokenized_query["condition"] = condition[2].strip()
 		return updated_tokenized_query
 
 	@staticmethod
@@ -75,15 +75,15 @@ class EsperTransformer(Transformer):
 		updated_input_clause = {}
 		if "," in input_clause:
 			# if a comma is in the input clause, multiple event streams are joined as input
-			updated_input_clause["join"] = input_clause.split(",")
+			updated_input_clause["join"] = [event_stream.strip() for event_stream in input_clause.split(',')]
 		else:
 			try:
 				tokenized_pattern = parse("pattern {pattern}", input_clause).named
-				updated_input_clause["pattern"] = EsperTransformer.parse_pattern(tokenized_pattern["pattern"])
+				updated_input_clause["pattern"] = EsperTransformer.parse_pattern(tokenized_pattern["pattern"].strip())
 			# if no error is thrown, the pattern clause was detected
 			except AttributeError:
 				# input must be single event type
-				updated_input_clause["single"] = input_clause
+				updated_input_clause["single"] = input_clause.strip()
 		return updated_input_clause
 
 	@staticmethod
