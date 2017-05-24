@@ -1,7 +1,7 @@
 """
 This module contains all json serializers in the project.
 """
-import json
+from json import loads as json_loads
 
 
 def serialize_hierarchy_overview(hierarchy):
@@ -27,5 +27,5 @@ def serialize_hierarchy_complete(hierarchy):
 		"id": hierarchy.id,
 		"name": hierarchy.name,
 		"timestamp": hierarchy.timestamp,
-		"hierarchy": json.loads(hierarchy.json_representation)
+		"hierarchy": json_loads(hierarchy.json_representation)
 	}

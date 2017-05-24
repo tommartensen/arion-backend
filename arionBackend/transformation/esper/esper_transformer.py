@@ -42,7 +42,6 @@ class EsperTransformer(Transformer):
 		updated_tokenized_query["input"] = condition[0]
 		if len(condition) > 1:
 			updated_tokenized_query["condition"] = condition[2]
-		print(updated_tokenized_query)
 		return updated_tokenized_query
 
 
