@@ -90,7 +90,7 @@ class CreateHierarchy(APIView):
 		try:
 			if not (data["name"] and len(data["queries"]) and type(data["queries"]) is list):
 				return False
-		except KeyError:
+		except (KeyError, TypeError):
 				return False
 
 		are_valid_queries = True
