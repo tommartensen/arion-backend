@@ -138,4 +138,21 @@ class QueryParser(object):
 		:param pattern: the pattern to parse
 		:return: eqmn representation of the pattern
 		"""
-		return pattern
+		pattern = pattern.replace("[", "(").replace("]", ")")
+		return list(QueryParser.parenthetic_contents(pattern))
+
+	@staticmethod
+	def parenthetic_contents(string):
+		"""
+		Source: https://stackoverflow.com/questions/4284991/parsing-nested-parentheses-in-python-grab-content-by-level
+		Generate parenthesized contents in string as pairs (level, contents).
+		:param string: the string to split
+		:return: list of tupels
+		"""
+		stack = []
+		for index, char in enumerate(string):
+			if char == '(':
+				stack.append(index)
+			elif char == ')' and stack:
+				start = stack.pop()
+				yield (len(stack), string[start + 1: index])
