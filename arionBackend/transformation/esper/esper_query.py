@@ -75,7 +75,15 @@ class QueryParser(object):
 		try:
 			tokenized_event_type = parse("{name}.win:{type}", event_type["event"]["name"]).named
 			event_type["event"]["name"] = tokenized_event_type["name"]
-			tokenized_with_window = {"window": {"event": event_type["event"]}, "type": tokenized_event_type["type"]}
+			if tokenized_event_type["type"] != "keepall()":
+				tokenized_type = parse("{type}({size})", tokenized_event_type["type"]).named
+				tokenized_with_window = {
+					"window": {"event": event_type["event"]},
+					"type": tokenized_type["type"],
+					"size": tokenized_type["size"]
+				}
+			else:
+				tokenized_with_window = {"window": {"event": event_type["event"]}, "type": tokenized_event_type["type"]}
 			if "alias" in event_type:
 				tokenized_with_window["alias"] = event_type["alias"]
 			return tokenized_with_window
