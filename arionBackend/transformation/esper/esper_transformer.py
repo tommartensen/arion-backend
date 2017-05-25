@@ -67,6 +67,11 @@ class EsperTransformer(Transformer):
 
 	@staticmethod
 	def find_selection(event_type):
+		"""
+		Finds a selection clause (from the std namespace) and updates the event type.
+		:param event_type: the event type to inspect
+		:return: updated event type
+		"""
 		try:
 			tokenized_event_type = parse("{name}.std:{selection}", event_type).named
 			return tokenized_event_type
@@ -75,6 +80,11 @@ class EsperTransformer(Transformer):
 
 	@staticmethod
 	def find_alias(event_type):
+		"""
+		Finds an alias clause ("as" keyword) and updates the event type.
+		:param event_type: the event type to inspect
+		:return: updated event type
+		"""
 		if " as " in event_type:
 			tokenized_with_alias = event_type.split(" as ")
 			return {"event": tokenized_with_alias[0], "alias": tokenized_with_alias[1]}
@@ -83,6 +93,11 @@ class EsperTransformer(Transformer):
 
 	@staticmethod
 	def find_window(event_type):
+		"""
+		Finds a window (from the window namespace) and updates the event type.
+		:param event_type: the event type to inspect
+		:return: updated event type
+		"""
 		try:
 			tokenized_event_type = parse("{name}.win:{type}", event_type["event"]["name"]).named
 			event_type["event"]["name"] = tokenized_event_type["name"]
@@ -95,6 +110,11 @@ class EsperTransformer(Transformer):
 
 	@staticmethod
 	def tokenize_input_stream(input_stream):
+		"""
+		Tokenizes a given input stream, looks for aliases, selections and windows.
+		:param input_stream: the input stream to inspect
+		:return: the tokenized input stream
+		"""
 		tokenized_input = EsperTransformer.find_alias(input_stream)
 		tokenized_input["event"] = EsperTransformer.find_selection(tokenized_input["event"])
 		return EsperTransformer.find_window(tokenized_input)
