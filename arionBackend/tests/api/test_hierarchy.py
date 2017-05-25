@@ -71,6 +71,7 @@ class HierarchyTestCase(APITestCase):
 					"INSERT INTO asd SELECT asdf FROM asdf as a",
 					"INSERT INTO asd SELECT asdf FROM asdf as a, asdfg as b",
 					"INSERT INTO asd SELECT window(*) FROM asdf.win:keepall() as a",
+					"INSERT INTO asd SELECT window(*) FROM asdf.win:length(4) as a",
 					"INSERT INTO asd SELECT as FROM asdf.std:lastevent() as f",
 					"INSERT INTO asd SELECT asdf FROM asdf, asdfg WHERE 1=1",
 					"INSERT INTO asd SELECT asdf FROM PATTERN [[2] asdf]"
