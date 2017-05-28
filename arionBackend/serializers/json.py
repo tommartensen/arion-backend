@@ -5,6 +5,9 @@ from json import loads as json_loads
 
 
 class JSONSerializer(object):
+	"""
+	This class contains methods for serializing model objects into JSON objects.
+	"""
 
 	@staticmethod
 	def serialize_hierarchy_overview(hierarchy):
@@ -50,6 +53,11 @@ class JSONSerializer(object):
 
 	@staticmethod
 	def serialize_basic_event_type(event_type):
+		"""
+		Serializes an event type into JSON format.
+		:param event_type: the event type to serialize
+		:return: Dictionary with event type information
+		"""
 		return {
 			"id": event_type.id,
 			"name": event_type.name,
@@ -57,6 +65,11 @@ class JSONSerializer(object):
 
 	@staticmethod
 	def serialize_complete_event_type(event_type):
+		"""
+		Serializes an event type into JSON format with enhanced information.
+		:param event_type: the event type to serialize
+		:return: Dictionary with enhanced event type information
+		"""
 		return {
 			"id": event_type.id,
 			"name": event_type.name,

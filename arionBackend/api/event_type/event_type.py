@@ -7,8 +7,6 @@ from rest_framework import status
 
 from arionBackend.api import GetXByIdView
 from arionBackend.models.event_type import EventType
-from arionBackend.models.hierarchy import Hierarchy
-from arionBackend.models.query import Query
 
 
 class GetEventTypesByHierarchyId(GetXByIdView):
@@ -18,11 +16,11 @@ class GetEventTypesByHierarchyId(GetXByIdView):
 
 	def get(self, request, hierarchy_id, format=None):
 		"""
-		This works as the API endpoint to return the queries for a defined hierarchy.
+		This works as the API endpoint to return the event types for a defined hierarchy.
 		:param request: The request object that the client sent.
 		:param hierarchy_id: The requested hierarchy defined by the id.
 		:param format: The data format that was requested.
-		:return: JsonResponse with the queries.
+		:return: JsonResponse with the event types.
 		"""
 		if not self.__class__.validate_input(hierarchy_id):
 			return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
@@ -37,16 +35,16 @@ class GetEventTypesByHierarchyId(GetXByIdView):
 
 class GetEventTypeById(GetXByIdView):
 	"""
-	This class holds the methods to get queries of a hierarchy by id.
+	This class holds the methods to get an event type by id.
 	"""
 
 	def get(self, request, event_type_id, format=None):
 		"""
-		This works as the API endpoint to return the queries for a defined hierarchy.
+		This works as the API endpoint to return an event type specified by an id.
 		:param request: The request object that the client sent.
-		:param hierarchy_id: The requested hierarchy defined by the id.
+		:param event_type_id: The requested event type defined by the id.
 		:param format: The data format that was requested.
-		:return: JsonResponse with the queries.
+		:return: JsonResponse with the event type.
 		"""
 		if not self.__class__.validate_input(event_type_id):
 			return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
