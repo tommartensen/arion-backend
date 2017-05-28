@@ -6,6 +6,7 @@ from django.http import JsonResponse, HttpResponse
 from rest_framework import status
 from rest_framework.views import APIView
 
+from arionBackend.api import GetXByIdView
 from arionBackend.models.hierarchy import Hierarchy
 from arionBackend.transformation.esper.esper_transformer import EsperTransformer
 
@@ -29,7 +30,7 @@ class GetAllHierarchies(APIView):
 		return JsonResponse(data=response, safe=False)
 
 
-class GetHierarchyById(APIView):
+class GetHierarchyById(GetXByIdView):
 	"""
 	This class holds the methods to get one hierarchy by id.
 	"""
@@ -49,15 +50,6 @@ class GetHierarchyById(APIView):
 		except ObjectDoesNotExist:
 			return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 		return JsonResponse(hierarchy.to_json())
-
-	@staticmethod
-	def validate_input(hierarchy_id):
-		"""
-		Static method to validate the input.
-		:param hierarchy_id: the input by the client.
-		:return: true, if valid; else if invalid.
-		"""
-		return int(hierarchy_id)
 
 
 class CreateHierarchy(APIView):

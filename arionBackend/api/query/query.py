@@ -4,13 +4,13 @@ This module contains all classes for the query API.
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, JsonResponse
 from rest_framework import status
-from rest_framework.views import APIView
 
+from arionBackend.api import GetXByIdView
 from arionBackend.models.hierarchy import Hierarchy
 from arionBackend.models.query import Query
 
 
-class GetQueriesByHierarchyId(APIView):
+class GetQueriesByHierarchyId(GetXByIdView):
 	"""
 	This class holds the methods to get queries of a hierarchy by id.
 	"""
@@ -25,21 +25,32 @@ class GetQueriesByHierarchyId(APIView):
 		"""
 		if not self.__class__.validate_input(hierarchy_id):
 			return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
-		try:
-			hierarchy = Hierarchy.objects.get(id=hierarchy_id)
-		except ObjectDoesNotExist:
+		queries = Query.objects.filter(hierarchy__id=hierarchy_id)
+		if not len(queries):
 			return HttpResponse(status=status.HTTP_404_NOT_FOUND)
-		queries = Query.objects.filter(hierarchy=hierarchy)
 		response = []
 		for query in queries:
 			response.append(query.to_json())
 		return JsonResponse(response, safe=False)
 
-	@staticmethod
-	def validate_input(hierarchy_id):
+
+class GetQueryById(GetXByIdView):
+	"""
+	This class holds the methods to get queries of a hierarchy by id.
+	"""
+
+	def get(self, request, query_id, format=None):
 		"""
-		Static method to validate the input.
-		:param hierarchy_id: the input by the client.
-		:return: true, if valid; else if invalid.
+		This works as the API endpoint to return the queries for a defined hierarchy.
+		:param request: The request object that the client sent.
+		:param hierarchy_id: The requested hierarchy defined by the id.
+		:param format: The data format that was requested.
+		:return: JsonResponse with the queries.
 		"""
-		return int(hierarchy_id)
+		if not self.__class__.validate_input(query_id):
+			return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
+		try:
+			query = Query.objects.get(id=query_id)
+		except ObjectDoesNotExist:
+			return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+		return JsonResponse(query.to_json(), safe=False)
