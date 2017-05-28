@@ -24,3 +24,6 @@ class EventType(models.Model):
 
 	def to_json(self):
 		return JSONSerializer.serialize_basic_event_type(self)
+
+	def to_complete_json(self):
+		return JSONSerializer.serialize_complete_event_type(self)
