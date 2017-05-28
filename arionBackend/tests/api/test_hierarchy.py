@@ -112,6 +112,7 @@ class HierarchyTestCase(APITestCase):
 			format="json")
 		self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+		# the second query is malformed
 		response = self.client.post(
 			'/api/hierarchy/esper/create',
 			follow=True,

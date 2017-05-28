@@ -41,6 +41,11 @@ class QueryParser(object):
 
 	@staticmethod
 	def parse_timer_window(pattern):
+		"""
+		Finds a timer window (timer:interval, timer:within, ...) in the pattern
+		:param pattern: the pattern to search in
+		:return: updated pattern
+		"""
 		index = pattern.find("timer")
 		if index > -1:
 			tokenized_timer = parse("timer:{timer[type]}({timer[value]})", pattern[index:]).named
@@ -147,5 +152,5 @@ class QueryParser(object):
 		:return: eqmn representation of the pattern
 		"""
 		pattern = pattern.strip("[").strip("]")
-		# TODO: Implement pattern parsing (this is not necessary for the prototypical implementation, IMHO)
+		# TODO(tommartensen): Implement pattern parsing (this is not necessary for the prototypical implementation)
 		return pattern
