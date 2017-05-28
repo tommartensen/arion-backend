@@ -15,13 +15,6 @@ class EventType(models.Model):
 	hierarchy = models.ForeignKey(Hierarchy)
 	name = models.TextField()
 
-	def is_basic_event_type(self):
-		"""
-		Checks, if event type has no source and is therefore considered a basic event type.
-		:return: boolean
-		"""
-		return True
-
 	def to_json(self):
 		"""
 		Serializes an event type to a basic JSON.
