@@ -43,7 +43,6 @@ class QueryParser(object):
 	def parse_timer_window(pattern):
 		index = pattern.find("timer")
 		if index:
-			print(pattern[index:])
 			try:
 				tokenized_timer = parse("timer:{timer[type]}({timer[value]})", pattern[index:]).named
 				return tokenized_timer
