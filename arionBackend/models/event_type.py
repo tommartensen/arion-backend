@@ -23,7 +23,15 @@ class EventType(models.Model):
 		return True
 
 	def to_json(self):
+		"""
+		Serializes an event type to a basic JSON.
+		:return: basic event type information in JSON format
+		"""
 		return JSONSerializer.serialize_basic_event_type(self)
 
 	def to_complete_json(self):
+		"""
+		Serializes an event type to an enhanced JSON.
+		:return: enhanced event type information in JSON format
+		"""
 		return JSONSerializer.serialize_complete_event_type(self)
