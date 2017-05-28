@@ -119,7 +119,7 @@ class HierarchyTestCase(APITestCase):
 				"name": "Test",
 				"queries": [
 					"INSERT INTO as SELECT * FROM asd",
-					"INSERT INTO SELECT * FROM asdf"
+					"INSERT INTO SELECT * FROM asdf",
 				]},
 			format="json")
 		self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
