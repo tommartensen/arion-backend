@@ -25,8 +25,12 @@ class QueryTestCase(APITestCase):
 		hierarchy.save()
 		event_type = EventType(name="asd", hierarchy=hierarchy)
 		event_type.save()
-		Query(hierarchy=hierarchy, query_string="INSERT INTO asd SELECT * FROM asd", output_event_type=event_type,
-		      eqmn_representation="{'output': {'name': 'asd', 'select': '*'}, 'input': {'single': 'asd'}}").save()
+		query = Query(hierarchy=hierarchy, query_string="INSERT INTO asd SELECT * FROM asd",
+		             output_event_type=event_type,
+		      eqmn_representation="{'output': {'name': 'asd', 'select': '*'}, 'input': {'single': 'asd'}}")
+		query.save()
+		query.inserting_event_types.add(event_type)
+		query.save()
 
 	def test_get_queries_by_hierarchy_id_success(self):
 		"""

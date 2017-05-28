@@ -5,6 +5,7 @@ This module contains the class to represent the real-world event type.
 from django.db import models
 
 from arionBackend.models.hierarchy import Hierarchy
+from arionBackend.serializers.json import JSONSerializer
 
 
 class EventType(models.Model):
@@ -20,3 +21,6 @@ class EventType(models.Model):
 		:return: boolean
 		"""
 		return True
+
+	def to_json(self):
+		return JSONSerializer.serialize_basic_event_type(self)

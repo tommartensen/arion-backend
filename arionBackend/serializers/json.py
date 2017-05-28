@@ -4,41 +4,61 @@ This module contains all json serializers in the project.
 from json import loads as json_loads
 
 
-def serialize_hierarchy_overview(hierarchy):
-	"""
-	Serializes a hierarchy to JSON format with basic information.
-	:param hierarchy: given hierarchy to serialize.
-	:return: Dictionary with hierarchy information
-	"""
-	return {
-		"id": hierarchy.id,
-		"name": hierarchy.name,
-		"timestamp": hierarchy.timestamp
-	}
+class JSONSerializer(object):
 
+	@staticmethod
+	def serialize_hierarchy_overview(hierarchy):
+		"""
+		Serializes a hierarchy to JSON format with basic information.
+		:param hierarchy: given hierarchy to serialize.
+		:return: Dictionary with hierarchy information
+		"""
+		return {
+			"id": hierarchy.id,
+			"name": hierarchy.name,
+			"timestamp": hierarchy.timestamp
+		}
 
-def serialize_hierarchy_complete(hierarchy):
-	"""
-	Serializes a hierarchy to JSON format with all information.
-	:param hierarchy: given hierarchy to serialize.
-	:return: Dictionary with hierarchy information
-	"""
-	return {
-		"id": hierarchy.id,
-		"name": hierarchy.name,
-		"timestamp": hierarchy.timestamp,
-		"hierarchy": json_loads(hierarchy.json_representation),
-	}
+	@staticmethod
+	def serialize_hierarchy_complete(hierarchy):
+		"""
+		Serializes a hierarchy to JSON format with all information.
+		:param hierarchy: given hierarchy to serialize.
+		:return: Dictionary with hierarchy information
+		"""
+		return {
+			"id": hierarchy.id,
+			"name": hierarchy.name,
+			"timestamp": hierarchy.timestamp,
+			"hierarchy": json_loads(hierarchy.json_representation),
+		}
 
+	@staticmethod
+	def serialize_query(query):
+		"""
+		Serializes a query into JSON format.
+		:param query: the query to serialize
+		:return: Dictionary with query information
+		"""
+		return {
+			"id": query.id,
+			"query": query.query_string,
+			"eqmn_representation": query.eqmn_representation,
+			"output_type": query.output_event_type.to_json(),
+			"inserting_types": [event_type.to_json() for event_type in query.inserting_event_types.all()]
+		}
 
-def serialize_query(query):
-	"""
-	Serializes a query into JSON format.
-	:param query: the query to serialize
-	:return: Dictionary with query information
-	"""
-	return {
-		"id": query.id,
-		"query": query.query_string,
-		"eqmn_representation": query.eqmn_representation
-	}
+	@staticmethod
+	def serialize_basic_event_type(event_type):
+		return {
+			"id": event_type.id,
+			"name": event_type.name,
+		}
+
+	@staticmethod
+	def serialize_complete_event_type(event_type):
+		return {
+			"id": event_type.id,
+			"name": event_type.name,
+			"feeding_queries": [query.id for query in event_type.output_type.all()]
+		}
