@@ -6,6 +6,7 @@ import json
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from arionBackend.models.event_type import EventType
 from arionBackend.models.hierarchy import Hierarchy
 from arionBackend.models.query import Query
 
@@ -22,9 +23,10 @@ class QueryTestCase(APITestCase):
 		"""
 		hierarchy = Hierarchy(name="TestHierarchy", json_representation="{}")
 		hierarchy.save()
-		Query(
-			hierarchy=hierarchy, query_string="INSERT INTO asd SELECT * FROM asd",
-			eqmn_representation="{'output': {'name': 'asd', 'select': '*'}, 'input': {'single': 'asd'}}").save()
+		event_type = EventType(name="asd", hierarchy=hierarchy)
+		event_type.save()
+		Query(hierarchy=hierarchy, query_string="INSERT INTO asd SELECT * FROM asd", output_event_type=event_type,
+		      eqmn_representation="{'output': {'name': 'asd', 'select': '*'}, 'input': {'single': 'asd'}}").save()
 
 	def test_get_queries_by_hierarchy_id_success(self):
 		"""

@@ -4,6 +4,7 @@ This module holds the test cases for the json serializer.
 from django.utils import timezone
 from django.test import TestCase
 
+from arionBackend.models.event_type import EventType
 from arionBackend.models.hierarchy import Hierarchy
 from arionBackend.models.query import Query
 from arionBackend.serializers.json import serialize_hierarchy_overview, serialize_hierarchy_complete, serialize_query
@@ -21,8 +22,10 @@ class JsonTestCase(TestCase):
 		"""
 		hierarchy = Hierarchy(name="TestHierarchy", json_representation="{}")
 		hierarchy.save()
-		Query(hierarchy=hierarchy, query_string="INSERT INTO asd SELECT * FROM asd",
-				eqmn_representation="{'output': {'name': 'asd', 'select': '*'}, 'input': {'single': 'asd'}}").save()
+		event_type = EventType(name="asd", hierarchy=hierarchy)
+		event_type.save()
+		Query(hierarchy=hierarchy, query_string="INSERT INTO asd SELECT * FROM asd", output_event_type=event_type,
+		      eqmn_representation="{'output': {'name': 'asd', 'select': '*'}, 'input': {'single': 'asd'}}").save()
 
 	def test_get_hierarchy_json_basic(self):
 		"""
