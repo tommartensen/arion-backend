@@ -23,7 +23,6 @@ class EsperTransformer(Transformer):
 
 		hierarchy = Hierarchy(name=name, json_representation={})
 		hierarchy.save()
-		query_objects = []
 		for query in queries:
 			parsed_query = QueryParser.parse_query_to_eqmn(query)
 			feeding_event_type_objects = []
@@ -43,7 +42,6 @@ class EsperTransformer(Transformer):
 				query.save()
 				query.inserting_event_types.set(feeding_event_type_objects)
 				query.save()
-				query_objects.append(query)
 			else:
 				hierarchy.delete()
 				return False
