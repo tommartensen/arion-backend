@@ -36,8 +36,20 @@ class QueryParser(object):
 		condition = regex_compile("(WHERE|Where|where)").split(tokenized_query["input"])
 		updated_tokenized_query["input"] = condition[0].strip()
 		if len(condition) > 1:
-			updated_tokenized_query["condition"] = condition[2].strip()
+			updated_tokenized_query["condition"] = QueryParser.parse_timer_window(condition[2].strip())
 		return updated_tokenized_query
+
+	@staticmethod
+	def parse_timer_window(pattern):
+		index = pattern.find("timer")
+		if index:
+			print(pattern[index:])
+			try:
+				tokenized_timer = parse("timer:{timer[type]}({timer[value]})", pattern[index:]).named
+				return tokenized_timer
+			except AttributeError:
+				pass
+		return pattern
 
 	@staticmethod
 	def find_selection(event_type):
@@ -138,21 +150,6 @@ class QueryParser(object):
 		:param pattern: the pattern to parse
 		:return: eqmn representation of the pattern
 		"""
-		pattern = pattern.replace("[", "(").replace("]", ")")
-		return list(QueryParser.parenthetic_contents(pattern))
-
-	@staticmethod
-	def parenthetic_contents(string):
-		"""
-		Source: https://stackoverflow.com/questions/4284991/parsing-nested-parentheses-in-python-grab-content-by-level
-		Generate parenthesized contents in string as pairs (level, contents).
-		:param string: the string to split
-		:return: list of tupels
-		"""
-		stack = []
-		for index, char in enumerate(string):
-			if char == '(':
-				stack.append(index)
-			elif char == ')' and stack:
-				start = stack.pop()
-				yield (len(stack), string[start + 1: index])
+		pattern = pattern.strip("[").strip("]")
+		# TODO: Implement pattern parsing (this is not necessary for the prototypical implementation, IMHO)
+		return pattern
