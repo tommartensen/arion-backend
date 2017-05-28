@@ -54,5 +54,4 @@ class GetEventTypeById(GetXByIdView):
 			event_type = EventType.objects.get(id=event_type_id)
 		except ObjectDoesNotExist:
 			return HttpResponse(status=status.HTTP_404_NOT_FOUND)
-		print(event_type)
 		return JsonResponse(event_type.to_complete_json(), safe=False)
