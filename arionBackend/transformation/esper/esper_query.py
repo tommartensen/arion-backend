@@ -42,7 +42,7 @@ class QueryParser(object):
 	@staticmethod
 	def parse_timer_window(pattern):
 		index = pattern.find("timer")
-		if index:
+		if index > -1:
 			try:
 				tokenized_timer = parse("timer:{timer[type]}({timer[value]})", pattern[index:]).named
 				return tokenized_timer

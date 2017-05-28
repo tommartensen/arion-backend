@@ -1,7 +1,4 @@
 class EventTypeRetriever(object):
-	@staticmethod
-	def update_event_type_information():
-		return True
 
 	@staticmethod
 	def find_inserting_event_type(output_query):

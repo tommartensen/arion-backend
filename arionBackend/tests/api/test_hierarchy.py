@@ -115,6 +115,11 @@ class HierarchyTestCase(APITestCase):
 		response = self.client.post(
 			'/api/hierarchy/esper/create',
 			follow=True,
-			data={"name": "Test", "queries": ["SELECT * FROM asd"]},
+			data={
+				"name": "Test",
+				"queries": [
+					"INSERT INTO as SELECT * FROM asd",
+					"INSERT INTO SELECT * FROM asdf"
+				]},
 			format="json")
 		self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

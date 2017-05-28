@@ -29,15 +29,12 @@ class EsperTransformer(Transformer):
 		for query in queries:
 			parsed_query = QueryParser.parse_query_to_eqmn(query)
 			if parsed_query:
-				print(parsed_query)
 				inserting_event_type, created = EventType.objects.get_or_create(
 					name=EventTypeRetriever.find_inserting_event_type(parsed_query["eqmn_representation"]["output"]),
 					hierarchy=hierarchy)
-				print(inserting_event_type.name)
 				concerned_event_types.append(inserting_event_type)
 				feeding_event_types = list(EventTypeRetriever.find_feeding_event_types(
 					parsed_query["eqmn_representation"]["input"]))
-				print(feeding_event_types)
 				for feeding_event_type in feeding_event_types:
 					event_type, created = EventType.objects.get_or_create(
 						name=feeding_event_type, hierarchy=hierarchy)
