@@ -54,7 +54,7 @@ class JsonTestCase(TestCase):
 		"""
 		Tests if the query can be serialized into a json object.
 		"""
-		print(Query.objects.get(query_string="INSERT INTO asd SELECT * FROM asd").inserting_event_types)
+
 		query = JSONSerializer.serialize_query(Query.objects.get(query_string="INSERT INTO asd SELECT * FROM asd"))
 		self.assertEqual(query["id"], 1)
 		self.assertEqual(query["query"], "INSERT INTO asd SELECT * FROM asd")
