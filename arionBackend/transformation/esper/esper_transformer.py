@@ -14,7 +14,24 @@ class EsperTransformer(Transformer):
 	This class extends the abstract base class Transformer and implements a transformer for Esper EPL.
 	"""
 
-	def transform(self, name, queries):
+	@staticmethod
+	def generate_hierarchy(hierarchy):
+		hierarchy_graph = {}
+		event_types = EventType.objects.filter(hierarchy=hierarchy)
+
+		for event_type in event_types:
+			feeding_queries = Query.objects.filter(output_event_type=event_type).values("inserting_event_types")
+			for feeding_query in feeding_queries:
+				inserting_event_type_id = feeding_query["inserting_event_types"]
+				if inserting_event_type_id not in hierarchy_graph:
+					hierarchy_graph[inserting_event_type_id] = []
+				if event_type.id not in hierarchy_graph[inserting_event_type_id]:
+					hierarchy_graph[inserting_event_type_id].append(event_type.id)
+		hierarchy.json_representation = hierarchy_graph
+		hierarchy.save()
+
+	@staticmethod
+	def transform(name, queries):
 		"""
 		This method transform an Esper EPL query into a hierarchy.
 		:param name: name of hierarchy
@@ -45,4 +62,5 @@ class EsperTransformer(Transformer):
 			else:
 				hierarchy.delete()
 				return False
+		EsperTransformer.generate_hierarchy(hierarchy)
 		return True

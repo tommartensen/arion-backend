@@ -10,8 +10,9 @@ class Transformer(metaclass=ABCMeta):
 	This class is an abstract base class for transformers of type "event language" -> "hierarchy".
 	"""
 
+	@staticmethod
 	@abstractmethod
-	def transform(self, name, queries):
+	def transform(name, queries):
 		"""
 		This abstract method transforms the queries into the hierarchy.
 		:param name: The name of the hierarchy.
