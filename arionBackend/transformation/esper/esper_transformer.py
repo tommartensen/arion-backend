@@ -16,6 +16,11 @@ class EsperTransformer(Transformer):
 
 	@staticmethod
 	def generate_hierarchy(hierarchy):
+		"""
+		This methods generates the hierarchy represented as a directed graph and saves it in a given hierarchy instance.
+		:param hierarchy: the hierarchy to generate the representation for.
+		"""
+		
 		hierarchy_graph = {}
 		event_types = EventType.objects.filter(hierarchy=hierarchy)
 
