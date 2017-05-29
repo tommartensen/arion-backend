@@ -33,7 +33,7 @@ class JSONSerializer(object):
 			"id": hierarchy.id,
 			"name": hierarchy.name,
 			"timestamp": hierarchy.timestamp,
-			"hierarchy": json_loads(hierarchy.json_representation),
+			"hierarchy": json_loads(hierarchy.graph_representation),
 		}
 
 	@staticmethod
@@ -46,7 +46,7 @@ class JSONSerializer(object):
 		return {
 			"id": query.id,
 			"query": query.query_string,
-			"eqmn_representation": query.eqmn_representation,
+			"eqmn_representation": json_loads(query.eqmn_representation),
 			"output_type": query.output_event_type.to_json(),
 			"inserting_types": [event_type.to_json() for event_type in query.inserting_event_types.all()]
 		}
