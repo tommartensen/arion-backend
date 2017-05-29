@@ -6,7 +6,7 @@ from django.apps import AppConfig
 
 
 class arionBackendConfig(AppConfig):
-    """
-    This class sets the name of the Django project.
-    """
-    name = 'arionBackend'
+	"""
+	This class sets the name of the Django project.
+	"""
+	name = 'arionBackend'
