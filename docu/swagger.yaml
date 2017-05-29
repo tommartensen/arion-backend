@@ -42,6 +42,8 @@ paths:
                 format: long
               name:
                 type: string
+              timestamp:
+                type: string
               hierarchy:
                 type: object
         '400':
