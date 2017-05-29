@@ -1,0 +1,223 @@
+swagger: '2.0'
+info:
+  version: '0.1'
+  title: Arion-Backend
+paths:
+  /api/hierarchy/esper:
+    get:
+      description: Gets a JSON object with the event type hierarchy.
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            title: ArrayOfHierarcchies
+            type: array
+            items:
+              title: Hierarchy
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: long
+                name:
+                  type: string
+  '/api/hierarchy/esper/{hierarchyId}':
+    get:
+      description: Get a single `Hierarchy` object defined by its id.
+      parameters:
+        - name: hierarchyId
+          in: path
+          description: Unique identifier for the `Hierarchy`
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            title: Hierarchy
+            type: object
+            properties:
+              id:
+                type: integer
+                format: long
+              name:
+                type: string
+              hierarchy:
+                type: object
+        '400':
+          description: Invalid Id
+        '404':
+          description: No hierarchy found for the specified id.
+  /api/hierarchy/create:
+    post:
+      description: Creates a new `Hierarchy`.
+      parameters:
+        - name: Hierarchy
+          in: body
+          description: Contains the hierarchy to create.
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              queries:
+                type: array
+                items:
+                  title: EventQuery
+                  type: string
+      responses:
+        '201':
+          description: Successful creation
+        '400':
+          description: Bad request. Maybe missing parameter (value)
+        '500':
+          description: Other server error
+  '/api/query/esper/hierarchy/{hierarchyId}':
+    get:
+      description: >-
+        Gets a list of `Query` objects for a defined `Hierarchy` object defined
+        by its id.
+      parameters:
+        - name: hierarchyId
+          in: path
+          description: Unique identifier for the `Hierarchy`
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            title: Queries
+            type: array
+            items:
+              title: EventQuery
+              type: object
+              properties:
+                id:
+                  type: integer
+                query:
+                  type: string
+                eqmn_representation:
+                  type: object
+                output_type:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                inserting_types:
+                  type: array
+                  items:
+                    title: Inserting EventTypes
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+        '400':
+          description: Invalid Id
+        '404':
+          description: No hierarchy found for the specified id.
+  '/api/event_type/esper/hierarchy/{hierarchyId}':
+    get:
+      description: >-
+        Gets a list of `EventType` objects for a defined `Hierarchy` object
+        defined by its id.
+      parameters:
+        - name: hierarchyId
+          in: path
+          description: Unique identifier for the `Hierarchy`
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            title: EventTypes
+            type: array
+            items:
+              title: EventType
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+        '400':
+          description: Invalid Id
+        '404':
+          description: No hierarchy found for the specified id.
+  '/api/query/esper/{queryId}':
+    get:
+      description: Gets a single `Query` object defined by its id.
+      parameters:
+        - name: queryId
+          in: path
+          description: Unique identifier for the `Query`
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              query:
+                type: string
+              eqmn_representation:
+                type: object
+              output_type:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+              inserting_types:
+                type: array
+                items:
+                  title: Inserting EventTypes
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+        '400':
+          description: Invalid Id
+        '404':
+          description: No query found for the specified id.
+  '/api/event_type/esper/{event_type_id}':
+    get:
+      description: Gets a single `EventType` object defined by its id.
+      parameters:
+        - name: event_type_id
+          in: path
+          description: Unique identifier for the `EventType`.
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            title: EventType
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              feeding_queries:
+                type: array
+                items:
+                  title: Feeding `Queries`
+                  type: integer
+        '400':
+          description: Invalid Id
+        '404':
+          description: No event type found for the specified id.
