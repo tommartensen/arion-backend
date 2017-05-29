@@ -19,7 +19,7 @@ class HierarchyTestCase(APITestCase):
 		"""
 		This method sets up the test class with the required data.
 		"""
-		Hierarchy(name="TestHierarchy", json_representation="{}").save()
+		Hierarchy(name="TestHierarchy", graph_representation="{}").save()
 
 	def test_get_all_hierarchies(self):
 		"""
@@ -74,8 +74,8 @@ class HierarchyTestCase(APITestCase):
 					"INSERT INTO asd SELECT window(*) FROM asdf.win:length(4) as a",
 					"INSERT INTO asd SELECT as FROM asdf.std:lastevent() as f",
 					"INSERT INTO asd SELECT asdf FROM asdf, asdfg WHERE 1=1",
-					"INSERT INTO asd SELECT asdf FROM PATTERN [[2] asdf]"
-					"INSERT INTO asd SELECT asdf FROM asdf WHERE timer:interval(2 minutes)"
+					"INSERT INTO asd SELECT asdf FROM PATTERN [[2] Asdf]"
+					"INSERT INTO asd SELECT asdf FROM asdf WHERE timer:interval(2 minutes)",
 				]},
 			format="json")
 		self.assertEqual(request.status_code, status.HTTP_201_CREATED)

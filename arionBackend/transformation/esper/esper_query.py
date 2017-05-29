@@ -121,27 +121,27 @@ class QueryParser(object):
 		:param input_clause: the input clause to parse
 		:return: the updated input clause
 		"""
-		updated_input_clause = {"input": {}}
+		updated_input_clause = {"data": {}}
 		if "," in input_clause:
 			# if a comma is in the input clause, multiple event streams are joined as input
 			stripped_event_streams = [event_stream.strip() for event_stream in input_clause.split(',')]
-			updated_input_clause["input"]["data"] = \
+			updated_input_clause["data"] = \
 				[QueryParser.tokenize_input_stream(event_stream) for event_stream in stripped_event_streams]
 			input_type = "JOIN"
 		else:
 			try:
 				tokenized_pattern = parse("pattern {pattern}", input_clause).named
-				updated_input_clause["input"]["data"] = \
+				updated_input_clause["data"] = \
 					QueryParser.parse_pattern(tokenized_pattern["pattern"].strip())
 				input_type = "PATTERN"
 			# if no error is thrown, the pattern clause was detected
 			except AttributeError:
 				# input must be single event type
-				updated_input_clause["input"]["data"] = input_clause.strip()
-				updated_input_clause["input"]["data"] = \
-					QueryParser.tokenize_input_stream(updated_input_clause["input"]["data"])
+				updated_input_clause["data"] = input_clause.strip()
+				updated_input_clause["data"] = \
+					QueryParser.tokenize_input_stream(updated_input_clause["data"])
 				input_type = "SINGLE"
-		updated_input_clause["input"]["type"] = input_type
+		updated_input_clause["type"] = input_type
 		return updated_input_clause
 
 	@staticmethod

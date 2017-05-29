@@ -13,7 +13,7 @@ class Hierarchy(models.Model):
 	"""
 
 	name = models.TextField()
-	json_representation = models.TextField()
+	graph_representation = models.TextField()
 	timestamp = models.DateTimeField(auto_now_add=True)
 
 	def to_json(self):

@@ -42,6 +42,8 @@ paths:
                 format: long
               name:
                 type: string
+              timestamp:
+                type: string
               hierarchy:
                 type: object
         '400':
@@ -123,7 +125,7 @@ paths:
           description: No hierarchy found for the specified id.
   '/api/event_type/esper/hierarchy/{hierarchyId}':
     get:
-      description: >-
+      description:
         Gets a list of `EventType` objects for a defined `Hierarchy` object
         defined by its id.
       parameters:

@@ -1,6 +1,7 @@
 """
 This module contains the class for retrieving event types from eqmn representations.
 """
+from re import findall as regex_findall
 
 
 class EventTypeRetriever(object):
@@ -36,3 +37,15 @@ class EventTypeRetriever(object):
 				for dictionary in value:
 					for result in EventTypeRetriever.find_feeding_event_types(dictionary):
 						yield result
+
+	@staticmethod
+	def find_feeding_event_types_for_pattern(pattern):
+		"""
+		Finds all event types that are used in the pattern. They are detected by their CamelCase notation.
+		:param pattern: the pattern to find the event types in.
+		:return: yields event types that are found, must be caught in a list.
+		"""
+
+		matches = regex_findall(r'\W+?(?P<EventType>([A-Z][a-z]+?)+?)\W', pattern)
+		for match in matches:
+			yield match[0]
