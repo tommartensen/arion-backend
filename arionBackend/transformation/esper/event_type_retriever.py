@@ -46,6 +46,6 @@ class EventTypeRetriever(object):
 		:return: yields event types that are found, must be caught in a list.
 		"""
 
-		matches = regex_findall("\W+?(?P<EventType>([A-Z][a-z]+?)+?)\W", pattern)
+		matches = regex_findall(r'\W+?(?P<EventType>([A-Z][a-z]+?)+?)\W', pattern)
 		for match in matches:
 			yield match[0]
