@@ -1,6 +1,8 @@
 """
 This module holds the test cases for the json serializer.
 """
+import json
+
 from django.utils import timezone
 from django.test import TestCase
 
@@ -20,13 +22,13 @@ class JsonTestCase(TestCase):
 		"""
 		This method sets up the test class with the required data.
 		"""
-		hierarchy = Hierarchy(name="TestHierarchy", json_representation="{}")
+		hierarchy = Hierarchy(name="TestHierarchy", graph_representation="{}")
 		hierarchy.save()
 		event_type = EventType(name="asd", hierarchy=hierarchy)
 		event_type.save()
 		query = Query(hierarchy=hierarchy, query_string="INSERT INTO asd SELECT * FROM asd",
-		             output_event_type=event_type,
-		      eqmn_representation="{'output': {'name': 'asd', 'select': '*'}, 'input': {'single': 'asd'}}")
+					output_event_type=event_type,
+					eqmn_representation=json.dumps({'output': {'name': 'asd', 'select': '*'}, 'input': {'single': 'asd'}}))
 		query.save()
 		query.inserting_event_types.set([event_type])
 		query.save()
@@ -58,6 +60,6 @@ class JsonTestCase(TestCase):
 		query = JSONSerializer.serialize_query(Query.objects.get(query_string="INSERT INTO asd SELECT * FROM asd"))
 		self.assertEqual(query["id"], 1)
 		self.assertEqual(query["query"], "INSERT INTO asd SELECT * FROM asd")
-		self.assertEqual(
+		self.assertDictEqual(
 			query["eqmn_representation"],
-			"{'output': {'name': 'asd', 'select': '*'}, 'input': {'single': 'asd'}}")
+			{'output': {'name': 'asd', 'select': '*'}, 'input': {'single': 'asd'}})

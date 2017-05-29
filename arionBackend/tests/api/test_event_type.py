@@ -21,7 +21,7 @@ class EventTypeTestCase(APITestCase):
 		"""
 		This method sets up the test class with the required data.
 		"""
-		hierarchy = Hierarchy(name="TestHierarchy", json_representation="{}")
+		hierarchy = Hierarchy(name="TestHierarchy", graph_representation="{}")
 		hierarchy.save()
 		event_type = EventType(name="asd", hierarchy=hierarchy)
 		event_type.save()
