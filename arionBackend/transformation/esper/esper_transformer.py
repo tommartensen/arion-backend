@@ -26,13 +26,13 @@ class EsperTransformer(Transformer):
 		event_types = EventType.objects.filter(hierarchy=hierarchy)
 
 		for event_type in event_types:
-			feeding_queries = Query.objects.filter(output_event_type=event_type).values("inserting_event_types")
+			feeding_queries = Query.objects.filter(output_event_type=event_type).values("feeding_event_types")
 			for feeding_query in feeding_queries:
-				inserting_event_type_id = feeding_query["inserting_event_types"]
-				if inserting_event_type_id not in hierarchy_graph:
-					hierarchy_graph[inserting_event_type_id] = []
-				if event_type.id not in hierarchy_graph[inserting_event_type_id]:
-					hierarchy_graph[inserting_event_type_id].append(event_type.id)
+				feeding_event_type_id = feeding_query["feeding_event_types"]
+				if feeding_event_type_id not in hierarchy_graph:
+					hierarchy_graph[feeding_event_type_id] = []
+				if event_type.id not in hierarchy_graph[feeding_event_type_id]:
+					hierarchy_graph[feeding_event_type_id].append(event_type.id)
 		hierarchy.graph_representation = json_dumps(hierarchy_graph)
 		hierarchy.save()
 
@@ -68,7 +68,7 @@ class EsperTransformer(Transformer):
 					eqmn_representation=json_dumps(parsed_query["eqmn_representation"]),
 					output_event_type=output_event_type)
 				query.save()
-				query.inserting_event_types.set(feeding_event_type_objects)
+				query.feeding_event_types.set(feeding_event_type_objects)
 				query.save()
 			else:
 				hierarchy.delete()
