@@ -24,7 +24,7 @@ class GetEventTypesByHierarchyId(GetXByIdView):
 		"""
 		if not self.__class__.validate_input(hierarchy_id):
 			return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
-		event_types = EventType.objects.filter(hierarchy__id=hierarchy_id)
+		event_types = EventType.objects.filter(hierarchy__id=hierarchy_id).order_by("name")
 		if not len(event_types):
 			return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 		response = []

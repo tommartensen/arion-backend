@@ -46,9 +46,9 @@ class JSONSerializer(object):
 		return {
 			"id": query.id,
 			"query": query.query_string,
-			"eqmn_representation": json_loads(query.eqmn_representation),
-			"output_type": query.output_event_type.to_json(),
-			"inserting_types": [event_type.to_json() for event_type in query.inserting_event_types.all()]
+			"eqmnRepresentation": json_loads(query.eqmn_representation),
+			"outputType": query.output_event_type.to_json(),
+			"feedingTypes": [event_type.to_json() for event_type in query.feeding_event_types.all()]
 		}
 
 	@staticmethod
@@ -61,6 +61,7 @@ class JSONSerializer(object):
 		return {
 			"id": event_type.id,
 			"name": event_type.name,
+			"isBasicEventType": event_type.is_basic_event_type()
 		}
 
 	@staticmethod
@@ -73,5 +74,6 @@ class JSONSerializer(object):
 		return {
 			"id": event_type.id,
 			"name": event_type.name,
-			"feeding_queries": [query.id for query in event_type.output_type.all()]
+			"isBasicEventType": event_type.is_basic_event_type(),
+			"feedingQueries": [query.id for query in event_type.output_type.all()]
 		}

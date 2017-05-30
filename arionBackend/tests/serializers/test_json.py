@@ -30,7 +30,7 @@ class JsonTestCase(TestCase):
 					output_event_type=event_type,
 					eqmn_representation=json.dumps({'output': {'name': 'asd', 'select': '*'}, 'input': {'single': 'asd'}}))
 		query.save()
-		query.inserting_event_types.set([event_type])
+		query.feeding_event_types.set([event_type])
 		query.save()
 
 	def test_get_hierarchy_json_basic(self):
@@ -61,5 +61,5 @@ class JsonTestCase(TestCase):
 		self.assertEqual(query["id"], 1)
 		self.assertEqual(query["query"], "INSERT INTO asd SELECT * FROM asd")
 		self.assertDictEqual(
-			query["eqmn_representation"],
+			query["eqmnRepresentation"],
 			{'output': {'name': 'asd', 'select': '*'}, 'input': {'single': 'asd'}})
