@@ -57,7 +57,17 @@ class GetQueryById(GetXByIdView):
 
 
 class GetQueriesByEventTypeId(GetXByIdView):
+	"""
+	This class holds the methods to get queries that feed an event type by id.
+	"""
 	def get(self, request, event_type_id, format=None):
+		"""
+		This works as the API endpoint to return the queries that feed a defined event type.
+		:param request: The request object that the client sent.
+		:param event_type_id: The event type that should be fed.
+		:param format: The data format that was requested.
+		:return: JsonResponse with the queries.
+		"""
 		if not self.__class__.validate_input(event_type_id):
 			return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
 		queries = Query.objects.filter(output_event_type__id=event_type_id)

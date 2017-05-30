@@ -91,7 +91,7 @@ class QueryTestCase(APITestCase):
 
 	def test_get_queries_by_event_type_id_success(self):
 		"""
-		Tests if queries can be retrieved by hierarchy id.
+		Tests if queries can be retrieved by event type id.
 		"""
 		event_type = EventType.objects.get(name="asd")
 		response = self.client.get('/api/query/esper/event_type/' + str(event_type.id), follow=True)
@@ -113,7 +113,7 @@ class QueryTestCase(APITestCase):
 
 	def test_get_queries_by_event_type_id_id_not_found(self):
 		"""
-		Tests if the queries cannot be retrieved, if there is no hierarchy with the id.
+		Tests if the queries cannot be retrieved, if there is no event type with the id.
 		"""
 		event_type = EventType.objects.get(name="asd")
 		request = self.client.get('/api/query/esper/event_type/' + str(event_type.id + 1), follow=True)
