@@ -28,3 +28,9 @@ class EventType(models.Model):
 		:return: enhanced event type information in JSON format
 		"""
 		return JSONSerializer.serialize_complete_event_type(self)
+
+	def is_basic_event_type(self):
+		if not len(self.output_type.all()):
+			return True
+		else:
+			return False

@@ -54,3 +54,16 @@ class GetQueryById(GetXByIdView):
 		except ObjectDoesNotExist:
 			return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 		return JsonResponse(query.to_json(), safe=False)
+
+
+class GetQueriesByEventTypeId(GetXByIdView):
+	def get(self, request, event_type_id, format=None):
+		if not self.__class__.validate_input(event_type_id):
+			return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
+		queries = Query.objects.filter(output_event_type__id=event_type_id)
+		if not len(queries):
+			return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+		response = []
+		for query in queries:
+			response.append(query.to_json())
+		return JsonResponse(response, safe=False)
