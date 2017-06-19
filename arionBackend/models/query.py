@@ -14,7 +14,7 @@ class Query(models.Model):
 	This class represents a real world event query.
 	"""
 	hierarchy = models.ForeignKey(Hierarchy, on_delete=models.CASCADE)
-	feeding_event_types = models.ManyToManyField(EventType, related_name="feeding_event_type")
+	input_event_types = models.ManyToManyField(EventType, related_name="input_event_type")
 	output_event_type = models.ForeignKey(EventType, related_name="output_type")
 	query_string = models.TextField()
 	eqmn_representation = models.TextField()
