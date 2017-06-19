@@ -75,7 +75,7 @@ class HierarchyTestCase(APITestCase):
 					"INSERT INTO asd SELECT as FROM asdf.std:lastevent() as f",
 					"INSERT INTO asd SELECT asdf FROM asdf, asdfg WHERE 1=1;",
 					"INSERT INTO asd SELECT asdf FROM PATTERN [[2] Asdf]"
-					"INSERT INTO asd SELECT asdf FROM asdf WHERE timer:interval(2 minutes)",
+					"INSERT INTO asd SELECT asdf FROM asdf WHERE timer:interval(2 minutes)"
 				]},
 			format="json")
 		self.assertEqual(request.status_code, status.HTTP_201_CREATED)
