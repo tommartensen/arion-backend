@@ -29,7 +29,7 @@ class QueryTestCase(APITestCase):
 			hierarchy=hierarchy, query_string="INSERT INTO asd SELECT * FROM asd", output_event_type=event_type,
 			eqmn_representation=json.dumps({'output': {'name': 'asd', 'select': '*'}, 'input': {'single': 'asd'}}))
 		query.save()
-		query.feeding_event_types.add(event_type)
+		query.input_event_types.add(event_type)
 		query.save()
 
 	def test_get_queries_by_hierarchy_id_success(self):
@@ -70,8 +70,8 @@ class QueryTestCase(APITestCase):
 		response = self.client.get('/api/query/esper/' + str(query.id), follow=True)
 		json_response = json.loads(response.content.decode('utf-8'))
 		self.assertEqual(json_response["query"], "INSERT INTO asd SELECT * FROM asd")
-		self.assertEqual(json_response["outputType"], {'id': 1, 'name': 'asd', 'isBasicEventType': False})
-		self.assertEqual(type(json_response["feedingTypes"]), list)
+		self.assertEqual(json_response["outputEventType"], {'id': 1, 'name': 'asd', 'isBasicEventType': False})
+		self.assertEqual(type(json_response["inputEventTypes"]), list)
 		self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 	def test_get_event_query_by_id_invalid_id(self):

@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   version: '0.1'
-  title: Arion-Backend
+  title: Arion
 paths:
   /api/hierarchy/esper:
     get:
@@ -102,7 +102,7 @@ paths:
                   type: string
                 eqmnRepresentation:
                   type: object
-                outputType:
+                outputEventType:
                   type: object
                   properties:
                     id:
@@ -111,10 +111,10 @@ paths:
                       type: string
                     isBasicEventType:
                       type: boolean
-                feedingTypes:
+                inputEventTypes:
                   type: array
                   items:
-                    title: Inserting EventTypes
+                    title: InputEventTypes
                     type: object
                     properties:
                       id:
@@ -186,17 +186,17 @@ paths:
                   type: string
                 eqmnRepresentation:
                   type: object
-                outputType:
+                outputEventType:
                   type: object
                   properties:
                     id:
                       type: integer
                     name:
                       type: string
-                feedingTypes:
+                inputEventTypes:
                   type: array
                   items:
-                    title: Inserting EventTypes
+                    title: InputEventTypes
                     type: object
                     properties:
                       id:
@@ -230,17 +230,17 @@ paths:
                 type: string
               eqmnRepresentation:
                 type: object
-              outputType:
+              outputEventType:
                 type: object
                 properties:
                   id:
                     type: integer
                   name:
                     type: string
-              feedingTypes:
+              inputEventType:
                 type: array
                 items:
-                  title: Inserting EventTypes
+                  title: InputEventTypes
                   type: object
                   properties:
                     id:
@@ -271,10 +271,10 @@ paths:
                 type: integer
               name:
                 type: string
-              feedingQueries:
+              inputQueries:
                 type: array
                 items:
-                  title: Feeding `Queries`
+                  title: Inserting `Queries`
                   type: integer
         400:
           description: Invalid Id
