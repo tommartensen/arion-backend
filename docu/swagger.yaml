@@ -1,16 +1,15 @@
 swagger: '2.0'
 info:
   version: '0.1'
-  title: Arion-Backend
+  title: Arion
 paths:
-  /api/hierarchy/esper:
+  '/api/hierarchy/esper':
     get:
       description: Gets a JSON object with the event type hierarchy.
       responses:
-        200:
+        '200':
           description: Successful response
           schema:
-            title: ArrayOfHierarcchies
             type: array
             items:
               title: Hierarchy
@@ -20,6 +19,8 @@ paths:
                   type: integer
                   format: long
                 name:
+                  type: string
+                timestamp:
                   type: string
   '/api/hierarchy/esper/{hierarchyId}':
     get:
@@ -31,7 +32,7 @@ paths:
           required: true
           type: integer
       responses:
-        200:
+        '200':
           description: Successful response
           schema:
             title: Hierarchy
@@ -46,9 +47,9 @@ paths:
                 type: string
               hierarchy:
                 type: object
-        400:
+        '400':
           description: Invalid Id
-        404:
+        '404':
           description: No hierarchy found for the specified id.
   /api/hierarchy/create:
     post:
@@ -56,7 +57,7 @@ paths:
       parameters:
         - name: Hierarchy
           in: body
-          description: Contains the hierarchy to create.
+          description: Contains the queries to create the hierarchy from.
           required: true
           schema:
             type: object
@@ -69,17 +70,17 @@ paths:
                   title: EventQuery
                   type: string
       responses:
-        201:
+        '201':
           description: Successful creation
-        400:
+        '400':
           description: Bad request. Maybe missing parameter (value)
-        500:
+        '500':
           description: Other server error
   '/api/query/esper/hierarchy/{hierarchyId}':
     get:
-      description:
-        Gets a list of `Query` objects for a defined `Hierarchy` object defined
-        by its id.
+      description: >-
+        Gets a list of `Query` objects for a `Hierarchy` object defined by its
+        id.
       parameters:
         - name: hierarchyId
           in: path
@@ -87,7 +88,7 @@ paths:
           required: true
           type: integer
       responses:
-        200:
+        '200':
           description: Successful response
           schema:
             title: Queries
@@ -102,7 +103,7 @@ paths:
                   type: string
                 eqmnRepresentation:
                   type: object
-                outputType:
+                outputEventType:
                   type: object
                   properties:
                     id:
@@ -111,10 +112,10 @@ paths:
                       type: string
                     isBasicEventType:
                       type: boolean
-                feedingTypes:
+                inputEventTypes:
                   type: array
                   items:
-                    title: Inserting EventTypes
+                    title: InputEventTypes
                     type: object
                     properties:
                       id:
@@ -123,15 +124,15 @@ paths:
                         type: string
                       isBasicEventType:
                         type: boolean
-        400:
+        '400':
           description: Invalid Id
-        404:
+        '404':
           description: No hierarchy found for the specified id.
   '/api/event_type/esper/hierarchy/{hierarchyId}':
     get:
-      description:
-        Gets a list of `EventType` objects for a defined `Hierarchy` object
-        defined by its id.
+      description: >-
+        Gets a list of `EventType` objects for a `Hierarchy` object defined by
+        its id.
       parameters:
         - name: hierarchyId
           in: path
@@ -139,7 +140,7 @@ paths:
           required: true
           type: integer
       responses:
-        200:
+        '200':
           description: Successful response
           schema:
             title: EventTypes
@@ -154,16 +155,15 @@ paths:
                   type: string
                 isBasicEventType:
                   type: boolean
-        400:
+        '400':
           description: Invalid Id
-        404:
+        '404':
           description: No hierarchy found for the specified id.
-          
   '/api/query/esper/event_type/{eventTypeId}':
     get:
-      description:
-        Gets a list of `Query` objects for a defined `EventType` object
-        defined by its id.
+      description: >-
+        Gets a list of `Query` objects for an `EventType` object defined by its
+        id.
       parameters:
         - name: eventTypeId
           in: path
@@ -171,7 +171,7 @@ paths:
           required: true
           type: integer
       responses:
-        200:
+        '200':
           description: Successful response
           schema:
             title: Queries
@@ -186,29 +186,27 @@ paths:
                   type: string
                 eqmnRepresentation:
                   type: object
-                outputType:
+                outputEventType:
                   type: object
                   properties:
                     id:
                       type: integer
                     name:
                       type: string
-                feedingTypes:
+                inputEventTypes:
                   type: array
                   items:
-                    title: Inserting EventTypes
+                    title: InputEventTypes
                     type: object
                     properties:
                       id:
                         type: integer
                       name:
                         type: string
-              
-        400:
+        '400':
           description: Invalid Id
-        404:
+        '404':
           description: No hierarchy found for the specified id.
-          
   '/api/query/esper/{queryId}':
     get:
       description: Gets a single `Query` object defined by its id.
@@ -219,7 +217,7 @@ paths:
           required: true
           type: integer
       responses:
-        200:
+        '200':
           description: Successful response
           schema:
             type: object
@@ -230,26 +228,26 @@ paths:
                 type: string
               eqmnRepresentation:
                 type: object
-              outputType:
+              outputEventType:
                 type: object
                 properties:
                   id:
                     type: integer
                   name:
                     type: string
-              feedingTypes:
+              inputEventType:
                 type: array
                 items:
-                  title: Inserting EventTypes
+                  title: InputEventTypes
                   type: object
                   properties:
                     id:
                       type: integer
                     name:
                       type: string
-        400:
+        '400':
           description: Invalid Id
-        404:
+        '404':
           description: No query found for the specified id.
   '/api/event_type/esper/{eventTypeId}':
     get:
@@ -261,7 +259,7 @@ paths:
           required: true
           type: integer
       responses:
-        200:
+        '200':
           description: Successful response
           schema:
             title: EventType
@@ -271,12 +269,12 @@ paths:
                 type: integer
               name:
                 type: string
-              feedingQueries:
+              inputQueries:
                 type: array
                 items:
-                  title: Feeding `Queries`
+                  title: Inserting `Queries`
                   type: integer
-        400:
+        '400':
           description: Invalid Id
-        404:
+        '404':
           description: No event type found for the specified id.

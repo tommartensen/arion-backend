@@ -20,9 +20,9 @@ class EventTypeRetriever(object):
 		return output_query["name"]
 
 	@staticmethod
-	def find_feeding_event_types(input_query):
+	def find_input_event_types(input_query):
 		"""
-		Finds all event types that are used as input streams to feed the event query.
+		Finds all event types that are used as input streams for the event query.
 		:param input_query: the input part of the event query representation.
 		:return: yields event types that are found, must be caught in a list.
 		"""
@@ -31,15 +31,15 @@ class EventTypeRetriever(object):
 			if key == "name":
 				yield value
 			elif isinstance(value, dict):
-				for result in EventTypeRetriever.find_feeding_event_types(value):
+				for result in EventTypeRetriever.find_input_event_types(value):
 					yield result
 			elif isinstance(value, list):
 				for dictionary in value:
-					for result in EventTypeRetriever.find_feeding_event_types(dictionary):
+					for result in EventTypeRetriever.find_input_event_types(dictionary):
 						yield result
 
 	@staticmethod
-	def find_feeding_event_types_for_pattern(pattern):
+	def find_input_event_types_for_pattern(pattern):
 		"""
 		Finds all event types that are used in the pattern. They are detected by their CamelCase notation.
 		:param pattern: the pattern to find the event types in.

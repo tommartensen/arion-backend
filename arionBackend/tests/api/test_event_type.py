@@ -30,7 +30,7 @@ class EventTypeTestCase(APITestCase):
 			output_event_type=event_type,
 			eqmn_representation="{'output': {'name': 'asd', 'select': '*'}, 'input': {'single': 'asd'}}")
 		query.save()
-		query.feeding_event_types.add(event_type)
+		query.input_event_types.add(event_type)
 		query.save()
 
 	def test_get_event_types_by_hierarchy_id_success(self):
@@ -68,7 +68,7 @@ class EventTypeTestCase(APITestCase):
 		response = self.client.get('/api/event_type/esper/' + str(event_type.id), follow=True)
 		json_response = json.loads(response.content.decode('utf-8'))
 		self.assertEqual(json_response["name"], "asd")
-		self.assertEqual(type(json_response["feedingQueries"]), list)
+		self.assertEqual(type(json_response["inputQueries"]), list)
 		self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 	def test_get_event_type_by_id_invalid_id(self):

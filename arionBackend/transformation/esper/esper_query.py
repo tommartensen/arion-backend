@@ -17,6 +17,8 @@ class QueryParser(object):
 		:param query: the query to parse
 		:return: eqmn model in json representation or false if error
 		"""
+		if query[len(query) - 1] == ";":
+			query = query[:len(query) - 1]
 		try:
 			tokenized_query = parse("insert into {output[name]} select {output[select]} from {input}", query).named
 			tokenized_query = QueryParser.parse_optional_condition(tokenized_query)
@@ -33,10 +35,11 @@ class QueryParser(object):
 		:return: updated parsed query
 		"""
 		updated_tokenized_query = tokenized_query
-		condition = regex_compile("(WHERE|Where|where)").split(tokenized_query["input"])
-		updated_tokenized_query["input"] = condition[0].strip()
-		if len(condition) > 1:
-			updated_tokenized_query["condition"] = QueryParser.parse_timer_window(condition[2].strip())
+		if "pattern" not in updated_tokenized_query["input"].lower():
+			condition = regex_compile("(WHERE|Where|where)").split(tokenized_query["input"])
+			updated_tokenized_query["input"] = condition[0].strip()
+			if len(condition) > 1:
+				updated_tokenized_query["condition"] = QueryParser.parse_timer_window(condition[2].strip())
 		return updated_tokenized_query
 
 	@staticmethod
@@ -48,7 +51,7 @@ class QueryParser(object):
 		"""
 		index = pattern.find("timer")
 		if index > -1:
-			tokenized_timer = parse("timer:{timer[type]}({timer[value]})", pattern[index:]).named
+			tokenized_timer = parse("timer:{timer[type]}({timer[value]}) ", pattern[index:]).named
 			return tokenized_timer
 		return pattern
 

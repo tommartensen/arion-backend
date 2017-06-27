@@ -30,7 +30,7 @@ class JsonTestCase(TestCase):
 					output_event_type=event_type,
 					eqmn_representation=json.dumps({'output': {'name': 'asd', 'select': '*'}, 'input': {'single': 'asd'}}))
 		query.save()
-		query.feeding_event_types.set([event_type])
+		query.input_event_types.set([event_type])
 		query.save()
 
 	def test_get_hierarchy_json_basic(self):
